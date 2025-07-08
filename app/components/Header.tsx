@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth } from "./AuthContext";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store";
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const { user, signOut } = useAuth();
@@ -13,6 +14,7 @@ export default function Header() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const profileRef = useRef<HTMLDivElement | null>(null);
   const cartCount = useSelector((state: RootState) => state.cart.items.reduce((sum, item) => sum + item.quantity, 0));
+  const router = useRouter();
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (profileRef.current && !(profileRef.current as HTMLDivElement).contains(e.target as Node)) setDropdown(false);
@@ -20,6 +22,34 @@ export default function Header() {
     if (dropdown) document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [dropdown]);
+
+  const handleProfileClick = () => {
+    try {
+      console.log('Profile clicked', user);
+      setDropdown(false);
+      router.push('/profile');
+    } catch (err) {
+      console.error('Error navigating to profile:', err);
+    }
+  };
+  const handleDashboardClick = () => {
+    try {
+      console.log('Dashboard clicked', user);
+      setDropdown(false);
+      router.push('/admin');
+    } catch (err) {
+      console.error('Error navigating to dashboard:', err);
+    }
+  };
+  const handleSignOut = () => {
+    try {
+      console.log('Sign out clicked', user);
+      signOut();
+      setDropdown(false);
+    } catch (err) {
+      console.error('Error signing out:', err);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur border-b border-gray-100 shadow-sm flex items-center justify-between px-4 md:px-6 py-3">
@@ -59,9 +89,11 @@ export default function Header() {
             </button>
             {dropdown && (
               <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg py-2 z-50 border">
-                <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>
-                {user && user.role === 'admin' && <Link href="/admin" className="block px-4 py-2 hover:bg-gray-100">Dashboard</Link>}
-                <button onClick={() => { signOut(); setDropdown(false); }} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Sign Out</button>
+                <button onClick={handleProfileClick} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Profile</button>
+                {user && user.role === 'admin' && (
+                  <button onClick={handleDashboardClick} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Dashboard</button>
+                )}
+                <button onClick={handleSignOut} className="block w-full text-left px-4 py-2 hover:bg-gray-100">Sign Out</button>
               </div>
             )}
           </div>

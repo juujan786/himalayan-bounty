@@ -1,3 +1,4 @@
+// This file is no longer used for main product/deal cards. See carousels and grid pages for card logic.
 'use client';
 
 import Image from "next/image";

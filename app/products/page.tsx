@@ -2,10 +2,14 @@
 import { useData } from '../components/DataContext';
 import { useState } from 'react';
 import { FaSeedling, FaLeaf, FaAppleAlt, FaSearch } from "react-icons/fa";
+import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../cartSlice';
 
 export default function ProductsPage() {
   const { products } = useData();
   const activeProducts = products.filter(p => p.active);
+  const dispatch = useDispatch();
   return (
     <div className="flex flex-col gap-12">
       {/* Search and Heading */}
@@ -35,19 +39,29 @@ export default function ProductsPage() {
       {/* Product Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {activeProducts.map((p, i) => (
-          <div key={p.id} className="bg-white rounded-xl shadow p-4 flex flex-col gap-2">
-            <div className="flex-1 flex items-center justify-center h-32 bg-gray-100 rounded mb-2">
-              <ProductImageCarousel images={p.images} name={p.name} />
-            </div>
-            <div className="text-xs text-gray-500 mb-1">{p.category}</div>
-            <div className="font-semibold mb-1">{p.name}</div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-green-900 font-bold text-lg">{p.price}</span>
-              {p.oldPrice && <span className="text-gray-400 line-through text-xs">{p.oldPrice}</span>}
-              {p.weight && <span className="text-xs text-gray-500 ml-2">({p.weight})</span>}
-            </div>
-            <div className="text-xs text-gray-500 mb-2">{p.description}</div>
-            {/* Add to Cart button here if needed */}
+          <div key={p.id} className="bg-white rounded-xl shadow p-4 flex flex-col gap-2 cursor-pointer hover:shadow-lg transition group">
+            <Link href={`/products/${p.id}`} className="flex-1 flex flex-col items-center justify-center w-full">
+              <div className="flex-1 flex items-center justify-center h-32 bg-gray-100 rounded mb-2 w-full">
+                <ProductImageCarousel images={p.images} name={p.name} />
+              </div>
+              <div className="text-xs text-gray-500 mb-1">{p.category}</div>
+              <div className="font-semibold mb-1">{p.name}</div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-green-900 font-bold text-lg">{p.price}</span>
+                {p.oldPrice && <span className="text-gray-400 line-through text-xs">{p.oldPrice}</span>}
+                {p.weight && <span className="text-xs text-gray-500 ml-2">({p.weight})</span>}
+              </div>
+            </Link>
+            <button
+              className="bg-green-900 text-white px-4 py-2 rounded hover:bg-green-800 transition mt-2 w-full"
+              onClick={() => {
+                let img = p.images[0] || '';
+                if (img.startsWith('data:')) img = '/default-thumbnail.png';
+                dispatch(addToCart({ id: p.id, name: p.name, price: parseFloat(p.price.replace(/[^\d.]/g, "")), image: img, quantity: 1 }));
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         ))}
       </section>
