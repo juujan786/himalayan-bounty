@@ -1,103 +1,85 @@
 import Image from "next/image";
+import { FaLeaf, FaBolt, FaShieldAlt } from "react-icons/fa";
+import FeaturedProductsCarousel from "./components/FeaturedProductsCarousel";
+import SpecialDealsCarousel from "./components/SpecialDealsCarousel";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col gap-16">
+      {/* Hero Section */}
+      <section className="flex flex-col md:flex-row gap-8 py-8 items-center justify-between">
+        <div className="flex-1 flex flex-col gap-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+            Pure & Natural <br /> Shilajit and <br /> Dry Fruits
+          </h1>
+          <button className="bg-green-900 text-white px-6 py-2 rounded-md w-fit mt-2 hover:bg-green-800 transition">Shop Now</button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-4 min-w-[320px] max-w-[420px]">
+          <div className="bg-gray-100 rounded-xl flex items-center justify-center h-32">
+            <Image src="/file.svg" alt="Premium Shilajit" width={64} height={64} />
+          </div>
+          <div className="bg-gray-100 rounded-xl flex items-center justify-center h-32">
+            <Image src="/window.svg" alt="Raw Almonds" width={64} height={64} />
+          </div>
+          <div className="bg-gray-100 rounded-xl flex items-center justify-center h-32">
+            <Image src="/globe.svg" alt="Bowl of Cashews" width={64} height={64} />
+          </div>
+          <div className="bg-gray-100 rounded-xl flex items-center justify-center h-32">
+            <Image src="/next.svg" alt="Mixed Nuts" width={64} height={64} />
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <FeaturedProductsCarousel />
+      {/* Special Deals */}
+      <SpecialDealsCarousel />
+      {/* Deals & Offers, Benefits, Testimonials, About Us */}
+      <div className="flex flex-col md:flex-row gap-8 my-8">
+        {/* Deals & Offers */}
+        <section className="w-full md:w-1/2">
+          <h2 className="text-2xl font-bold mb-4">Deals & Offers</h2>
+          <div className="bg-gray-100 rounded-xl p-8 flex flex-col gap-4 min-h-[220px] max-w-md">
+            <span className="text-green-900 font-semibold">Special offer on cashews</span>
+            <div className="flex items-center gap-2">
+              <span className="bg-green-200 text-green-900 px-3 py-1 rounded-full text-xs font-bold">Up to 20% off</span>
+            </div>
+            <p className="text-gray-700 text-sm">Get the best deals on premium cashews. Limited time offer!</p>
+          </div>
+        </section>
+        {/* Benefits, Testimonials, About Us */}
+        <div className="flex-1 flex flex-col gap-8">
+          {/* Benefits */}
+          <section>
+            <div className="flex gap-8 justify-center">
+              {[
+                {icon: <FaBolt className="text-green-900 text-2xl" />, title: "Resolve", desc: "Energy"},
+                {icon: <FaLeaf className="text-green-900 text-2xl" />, title: "Mojin", desc: "Nutrients"},
+                {icon: <FaShieldAlt className="text-green-900 text-2xl" />, title: "Enhances", desc: "Stamina"},
+              ].map((b, idx) => (
+                <div key={b.title} className="flex flex-col items-center gap-2">
+                  <div className="bg-green-100 rounded-full p-4 flex items-center justify-center mb-2">{b.icon}</div>
+                  <span className="font-semibold text-green-900">{b.title}</span>
+                  <span className="text-xs text-gray-500">{b.desc}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+          {/* Testimonials */}
+          <section className="max-w-md">
+            <h2 className="text-2xl font-bold mb-4">Testimonials</h2>
+            <div className="bg-gray-100 rounded-xl p-6 flex flex-col gap-2">
+              <p className="text-gray-700 text-sm">"Reselle contact us acceel aabeb ecred gellen. Lorem facer adipisieviet."</p>
+              <span className="font-semibold text-green-900 mt-2">— Sarah</span>
+            </div>
+          </section>
+          {/* About Us */}
+          <section className="max-w-2xl">
+            <h2 className="text-2xl font-bold mb-4">About Us</h2>
+            <p className="text-gray-700 text-sm">Lorem ipsum dolor text outside Contact information here</p>
+          </section>
+        </div>
+      </div>
     </div>
   );
 }
